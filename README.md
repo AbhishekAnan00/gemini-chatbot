@@ -2,9 +2,12 @@
 
 [![Vercel Deployment](https://img.shields.io/badge/Frontend-Vercel-blue?style=flat-square)](https://gemini-chatbot-xcc7-enp1qk3qm-abhishek-anands-projects-f620696b.vercel.app/)
 [![Backend Deployment](https://img.shields.io/badge/Backend-Render-blue?style=flat-square)](https://gemini-chatbot-lxlg.onrender.com)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 Gemini Chatbot is a full-stack chatbot application that leverages real-time communication with Socket.io, a Next.js frontend deployed on Vercel, and an Express-based backend deployed on Render. It integrates with Google’s Generative AI API to generate responses and supports optional authentication for personalized experiences.
+
+![Image](https://github.com/user-attachments/assets/d82957f8-5b90-4b56-b101-51f9d418a67a)
+
+![Image](https://github.com/user-attachments/assets/de7e4a74-ab18-49f8-a566-18c3e14b12a0)
 
 ## Table of Contents
 
