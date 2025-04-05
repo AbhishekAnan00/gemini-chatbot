@@ -2,12 +2,15 @@
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
+import { IoMdArrowRoundUp } from "react-icons/io";
+import { MdStopCircle } from "react-icons/md";
 
 const socket = io("http://localhost:5000");
 
 export default function GeminiChatbot({ user, onSignOut }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
   const chatEndRef = useRef(null);
 
   useEffect(() => {
@@ -25,7 +28,8 @@ export default function GeminiChatbot({ user, onSignOut }) {
     if (!input.trim()) return;
     const userMessage = { sender: "user", text: input };
     setMessages((prev) => [...prev, userMessage]);
-
+    setInput("");
+    setLoading(true);
     try {
       const config = user
         ? { headers: { Authorization: `Bearer ${user.token}` } }
@@ -39,7 +43,7 @@ export default function GeminiChatbot({ user, onSignOut }) {
     } catch (error) {
       console.error("Error in GeminiChatbot:", error);
     }
-    setInput("");
+    setLoading(false);
   };
 
   const userAvatar = "https://cdn-icons-png.flaticon.com/512/727/727399.png";
@@ -72,9 +76,7 @@ export default function GeminiChatbot({ user, onSignOut }) {
               return (
                 <div
                   key={i}
-                  className={`flex items-start ${
-                    isUser ? "justify-end" : "justify-start"
-                  }`}
+                  className={`flex items-start ${isUser ? "justify-end" : "justify-start"}`}
                 >
                   {!isUser && (
                     <img
@@ -104,6 +106,11 @@ export default function GeminiChatbot({ user, onSignOut }) {
             })}
             <div ref={chatEndRef} />
           </div>
+          {loading && (
+            <div className="text-center mt-4">
+              <span className="text-gray-500">Loading reply...</span>
+            </div>
+          )}
         </main>
 
         <footer className="p-3 border-t border-gray-300 bg-white">
@@ -113,13 +120,19 @@ export default function GeminiChatbot({ user, onSignOut }) {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type your message..."
-              className="flex-1 border border-gray-300 rounded-l-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+              className="flex-1 border border-gray-300 rounded-l-full px-4 py-2 outline-0 text-black"
+              disabled={loading}
             />
             <button
               onClick={handleSend}
-              className="bg-blue-600 text-white px-4 py-2 rounded-r-full hover:bg-blue-700 transition-colors"
+              className={`px-4 py-2 rounded-r-full transition-colors ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-700 bg-gradient-to-r from-blue-600 to-purple-600 text-white cursor-pointer"
+              }`}
+              disabled={loading}
             >
-              Send
+              {loading ? <MdStopCircle /> : <IoMdArrowRoundUp />}
             </button>
           </div>
         </footer>
@@ -127,7 +140,6 @@ export default function GeminiChatbot({ user, onSignOut }) {
     </div>
   );
 }
-
 
 
 
