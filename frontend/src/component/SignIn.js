@@ -18,7 +18,7 @@ export default function SignIn({ setUser }) {
       setUser({ username: data.username, token: data.token });
     } catch (err) {
       console.error("Sign in error:", err);
-      setError("Invalid credentials. Please try again.");
+      setError("Invalid input, Please try again.");
     }
   };
 

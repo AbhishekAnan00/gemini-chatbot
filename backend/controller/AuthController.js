@@ -9,7 +9,7 @@ export const signIn = (req, res) => {
   const { username, password } = req.body;
 
   if (username && password) {
-    const token = jwt.sign({ username }, SECRET_KEY, { expiresIn: "1h" });
+    const token = jwt.sign({ username }, SECRET_KEY, { expiresIn: "10days" });
     res.status(200).json({ token, username });
   } else {
     res.status(400).json({ message: "please fill fields." });
